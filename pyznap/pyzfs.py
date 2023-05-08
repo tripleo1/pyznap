@@ -31,6 +31,20 @@ if exists('pv'):
 else:
     PV = None
 
+# zfs get -H -o value written
+def written(path=None):
+    """Lists filesystems and snapshots for a given path"""
+    cmd = ['zfs', 'get']
+    cmd.append('-H')
+    cmd.append('-o')
+    cmd.append('value')
+    cmd.append('written')
+
+    if path:
+        cmd.append(path)
+
+    out = check_output(cmd)
+    return out
 
 def find(path=None, ssh=None, max_depth=None, types=[]):
     """Lists filesystems and snapshots for a given path"""
