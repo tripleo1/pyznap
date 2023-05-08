@@ -36,6 +36,7 @@ def written(path=None):
     """Lists filesystems and snapshots for a given path"""
     cmd = ['zfs', 'get']
     cmd.append('-H')
+    cmd.append('-p')
     cmd.append('-o')
     cmd.append('value')
     cmd.append('written')
