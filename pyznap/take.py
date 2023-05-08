@@ -83,8 +83,8 @@ def take_filesystem(filesystem, conf):
 
     try:
         # check if there has been written to this filesystem
-        fs_written = filesystem.written()[0]
-        logger.error('filesystem written : {}'.format(fs_written))
+        fs_written = filesystem.written()[0][0]
+        logger.info('filesystem written : {}'.format(fs_written))
     except (DatasetNotFoundError, DatasetBusyError) as err:
         return 1
     
