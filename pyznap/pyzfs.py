@@ -232,6 +232,9 @@ class ZFSDataset(object):
     def filesystems(self):
         return find(self.name, ssh=self.ssh, max_depth=1, types=['filesystem'])[1:]
 
+    def written(self):
+        return written(self.name)
+
     def snapshots(self):
         return find(self.name, ssh=self.ssh, max_depth=1, types=['snapshot'])
 
