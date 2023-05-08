@@ -88,6 +88,9 @@ def take_filesystem(filesystem, conf):
     except (DatasetNotFoundError, DatasetBusyError) as err:
         return 1
     
+    if fs_written == 0:
+        logger.info('fs_written  == 0 ')
+        
     # Reverse sort by time taken
     for snaps in snapshots.values():
         snaps.reverse()
