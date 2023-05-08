@@ -88,9 +88,6 @@ def take_filesystem(filesystem, conf):
     except (DatasetNotFoundError, DatasetBusyError) as err:
         return 1
     
-    if fs_written == 0:
-        logger.info('fs_written  == 0 ')
-
     # Reverse sort by time taken
     for snaps in snapshots.values():
         snaps.reverse()
@@ -113,6 +110,9 @@ def take_filesystem(filesystem, conf):
                           snapshots['daily'][0][1].day != now().day or
                           now() - snapshots['daily'][0][1] > timedelta(days=1)):
         take_snap(filesystem, 'daily')
+
+    if fs_written != 0:
+        logger.info('nothing written to filesystem, not taking hourly & frequent snapshots')
 
     if conf['hourly'] and fs_written != 0 and (not snapshots['hourly'] or
                            snapshots['hourly'][0][1].hour != now().hour or
