@@ -111,10 +111,10 @@ def take_filesystem(filesystem, conf):
         take_snap(filesystem, 'daily')
 
     if fs_written == 0:
-        logger.info('nothing written to filesystem, not taking hourly & frequent snapshots {} is int {}'.format(fs_written, filesystem.written()[0][0]))
+        logger.info('nothing written to filesystem, not taking hourly & frequent snapshots')
         return 0
 
-    if conf['hourly'] and fs_written != 0 and (not snapshots['hourly'] or
+    if conf['hourly'] and (not snapshots['hourly'] or
                            snapshots['hourly'][0][1].hour != now().hour or
                            now() - snapshots['hourly'][0][1] > timedelta(hours=1)):
         
