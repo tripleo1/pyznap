@@ -83,14 +83,14 @@ def take_filesystem(filesystem, conf):
 
     try:
         # check if there has been written to this filesystem
-        fs_written = filesystem.written()[0][0]
+        fs_written = int(filesystem.written()[0][0])
         logger.info('filesystem written : {}'.format(fs_written))
     except (DatasetNotFoundError, DatasetBusyError) as err:
         return 1
     
     if fs_written == 0:
         logger.info('fs_written  == 0 ')
-        
+
     # Reverse sort by time taken
     for snaps in snapshots.values():
         snaps.reverse()
