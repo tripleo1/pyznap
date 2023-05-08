@@ -360,9 +360,6 @@ class ZFSFilesystem(ZFSDataset):
 
     def unmount(self, *args, **kwargs):
         raise NotImplementedError()
-    
-    def written(self):
-        return written(self.name)
 
 class ZFSSnapshot(ZFSDataset):
     def snapname(self):
