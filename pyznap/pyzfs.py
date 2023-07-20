@@ -405,6 +405,10 @@ class ZFSSnapshot(ZFSDataset):
 
         # cmd.append('-v')
         # cmd.append('-P')
+
+        # add support for large blocks
+        cmd.append('-L')
+        
         if resume_token is not None:
             cmd.append('-t')
             cmd.append(resume_token)
