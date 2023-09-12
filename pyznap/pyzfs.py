@@ -31,6 +31,21 @@ if exists('pv'):
 else:
     PV = None
 
+# zfs get -H -o value written
+def written(path=None):
+    """Lists filesystems and snapshots for a given path"""
+    cmd = ['zfs', 'get']
+    cmd.append('-H')
+    cmd.append('-p')
+    cmd.append('-o')
+    cmd.append('value')
+    cmd.append('written')
+
+    if path:
+        cmd.append(path)
+
+    out = check_output(cmd)
+    return out
 
 def find(path=None, ssh=None, max_depth=None, types=[]):
     """Lists filesystems and snapshots for a given path"""
@@ -218,6 +233,9 @@ class ZFSDataset(object):
     def filesystems(self):
         return find(self.name, ssh=self.ssh, max_depth=1, types=['filesystem'])[1:]
 
+    def written(self):
+        return written(self.name)
+
     def snapshots(self):
         return find(self.name, ssh=self.ssh, max_depth=1, types=['snapshot'])
 
@@ -387,6 +405,10 @@ class ZFSSnapshot(ZFSDataset):
 
         # cmd.append('-v')
         # cmd.append('-P')
+
+        # add support for large blocks
+        cmd.append('-L')
+        
         if resume_token is not None:
             cmd.append('-t')
             cmd.append(resume_token)
